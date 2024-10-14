@@ -28,18 +28,17 @@ session_start();
     ?>
 
     <form action="../processRecepcionista.php" method="post">
+        <input type="hidden" name="type" value="search">
         <input type="text" name="search" placeholder="Procurar">
         <input type="submit" value="🔎">
     </form>
     <?php
 
-    if ($_SESSION['alunos'] != "") {
-        echo $_SESSION['alunos'];
+    if ($_SESSION['searchAluno'] != "") {
+        echo $_SESSION['searchAluno'];
     } else {
         require_once "../../controller/Controller.php";
-
         $controller = new Controller();
-
         echo $controller->getAlunos();
     }
     ?>

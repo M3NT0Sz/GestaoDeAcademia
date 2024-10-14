@@ -20,13 +20,18 @@ if (!empty($_POST['nome']) && !empty($_POST['cpf']) && !empty($_POST['email']) &
     die();
 }
 
-if (!empty($_POST['search'])) {
-    $search = $_POST['search'];
-    $elements = $controller->getFilteredAlunos($search);
-    $_SESSION['alunos'] = $elements;
-    die();
-} else {
-    $_SESSION['alunos'] = "";
+if ($_POST['type'] == "search") {
+    if (!empty($_POST['search']) && $_POST['type'] == "search") {
+        $search = $_POST['search'];
+        $elements = $controller->getFilteredAluno($search);
+        $_SESSION['searchAluno'] = $elements;
+        header("Location: ./Pages/Recepcionista.php");
+        die();
+    } else {
+        $_SESSION['searchAluno'] = "";
+        header("Location: ./Pages/Recepcionista.php");
+        die();
+    }
 }
 
 if (!empty($_POST['id']) && $_POST['type'] == "delete") {

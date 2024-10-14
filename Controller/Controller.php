@@ -48,11 +48,10 @@ class Controller
         return $elements;
     }
 
-    public function getFilteredAlunos(string $name)
+    public function getFilteredAlunos(string $nome)
     {
-        $alunos = $this->database->getAlunoByNome($name);
+        $alunos = $this->database->getAlunoByNome($nome);
         $elements = '';
-        $alunos = $this->database->getAlunoByNome($name);
         foreach ($alunos as $aluno) {
             $elements .= '<div>' . $aluno["nome"] . '</div>' .
                 '<div>' . $aluno["cpf"] . '</div>' .
