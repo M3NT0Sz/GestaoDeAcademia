@@ -1,7 +1,7 @@
 START TRANSACTION;
 SET time_zone = "+03:00";
 
-CREATE TABLE `recepcionista` (
+CREATE TABLE `aluno` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) DEFAULT NULL,
   `cpf` varchar(14) DEFAULT NULL,

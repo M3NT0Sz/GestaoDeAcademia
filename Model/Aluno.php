@@ -1,5 +1,5 @@
 <?php
-class Recepcionista
+class Aluno
 {
     private $nome;
     private $cpf;

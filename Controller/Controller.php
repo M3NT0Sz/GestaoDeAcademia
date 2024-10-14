@@ -1,6 +1,7 @@
 <?php
-require_once '../model/Database.php';
-require_once '../model/Recepcionista.php';
+require_once(__DIR__ . '/../model/Database.php');
+require_once(__DIR__ . '/../model/Aluno.php');
+
 class Controller
 {
     private $database;
@@ -10,9 +11,63 @@ class Controller
         $this->database = new Database("localhost", "root", "", "academia");
     }
 
-    public function cadastrarRecepcionista($nome, $cpf, $email, $telefone, $endereco, $dataNascimento)
+    public function cadastrarAluno($nome, $cpf, $email, $telefone, $endereco, $dataNascimento)
     {
-        $recepcionistas = new Recepcionista($nome, $cpf, $email, $telefone, $endereco, $dataNascimento);
-        $this->database->inserirRecepcionista($recepcionistas);
+        $alunos = new Aluno($nome, $cpf, $email, $telefone, $endereco, $dataNascimento);
+        $this->database->inserirAluno($alunos);
+    }
+
+    public function getAlunos()
+    {
+        $alunos = $this->database->getAlunoByNome("");
+        $elements = '';
+        foreach ($alunos as $aluno) {
+            $elements .= '<div>' . $aluno["nome"] . '</div>' .
+                '<div>' . $aluno["cpf"] . '</div>' .
+                '<div>' . $aluno["email"] . '</div>' .
+                '<div>' . $aluno["telefone"] . '</div>' .
+                '<div>' . $aluno["endereco"] . '</div>' .
+                '<div>' . $aluno["dataNascimento"] . '</div>' .
+                '<div>' .
+                '<form method="POST" action="../processRecepcionista.php">' .
+                '<input type="hidden" name="id" value="' . $aluno["id"] . '">' .
+                '<input type="hidden" name="type" value="delete">' .
+                '<input type="submit" value="X">' .
+                '</form>' .
+                '</div>' .
+                '</div>';
+        }
+
+        return $elements;
+    }
+
+    public function getFilteredAlunos(string $name)
+    {
+        $alunos = $this->database->getAlunoByNome($name);
+        $elements = '';
+        $alunos = $this->database->getAlunoByNome($name);
+        foreach ($alunos as $aluno) {
+            $elements .= '<div>' . $aluno["nome"] . '</div>' .
+                '<div>' . $aluno["cpf"] . '</div>' .
+                '<div>' . $aluno["email"] . '</div>' .
+                '<div>' . $aluno["telefone"] . '</div>' .
+                '<div>' . $aluno["endereco"] . '</div>' .
+                '<div>' . $aluno["dataNascimento"] . '</div>' .
+                '<div>' .
+                '<form method="POST" action="../processRecepcionista.php">' .
+                '<input type="hidden" name="id" value="' . $aluno["id"] . '">' .
+                '<input type="hidden" name="type" value="delete">' .
+                '<input type="submit" value="X">' .
+                '</form>' .
+                '</div>' .
+                '</div>';
+        }
+
+        return $elements;
+    }
+
+    public function deleteAluno(int $id)
+    {
+        $this->database->deleteAlunoById($id);
     }
 }

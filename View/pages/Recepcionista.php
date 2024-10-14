@@ -26,6 +26,23 @@ session_start();
         unset($_SESSION['recepcionista']);
     }
     ?>
+
+    <form action="../processRecepcionista.php" method="post">
+        <input type="text" name="search" placeholder="Procurar">
+        <input type="submit" value="🔎">
+    </form>
+    <?php
+
+    if ($_SESSION['alunos'] != "") {
+        echo $_SESSION['alunos'];
+    } else {
+        require_once "../../controller/Controller.php";
+
+        $controller = new Controller();
+
+        echo $controller->getAlunos();
+    }
+    ?>
 </body>
 
 </html>
