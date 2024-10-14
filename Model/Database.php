@@ -58,6 +58,20 @@ class Database
         return ($result);
     }
 
+    public function InserirAulas($aulas)
+    {
+        $connection = $this->connectDB();
+        $query = "INSERT INTO aula (nome_aula, descricao_aula, date_aula, hora_aula, duracao) VALUES ('" . $aulas->getNome() . "', '" . $aulas->getDescricao() . "', '" . $aulas->getData() . "', '" . $aulas->getHora() . "', '" . $aulas->getDuracao() . "')";
+        mysqli_query($connection, $query);
+    }
+
+    public function getAulaByNome($nome)
+    {
+        $connection = $this->connectDB();
+        $query = "SELECT * FROM aula WHERE nome_aula LIKE '%" . $nome . "%'";
+        $result = mysqli_query($connection, $query);
+        return ($result);
+    }
     public function updateExercicioById($exercicio, $id)
     {
         $connection = $this->connectDB();
