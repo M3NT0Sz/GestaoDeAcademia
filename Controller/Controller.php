@@ -2,6 +2,7 @@
 require_once(__DIR__ . '/../model/Database.php');
 require_once(__DIR__ . '/../model/Aluno.php');
 require_once(__DIR__ . '/../model/Exercicio.php');
+require_once(__DIR__ . '/../model/Aula.php');
 
 class Controller
 {
@@ -22,6 +23,12 @@ class Controller
     {
         $exercicio = new Exercicio($nome, $descricao, $repeticoes, $series);
         $this->database->inserirExercicio($exercicio);
+    }
+
+    public function cadastrarAula($nome, $descricao, $data, $hora, $duracao)
+    {
+        $aulas = new Aulas($nome, $descricao, $data, $hora, $duracao);
+        $this->database->inserirAulas($aulas);
     }
 
     public function getAlunos()
@@ -100,6 +107,8 @@ class Controller
         return $elements;
     }
 
+   
+
     public function getFilteredExercicios(string $name)
     {
         $exercicios = $this->database->getExercicioByNome($name);
@@ -121,6 +130,50 @@ class Controller
 
         return $elements;
     }
+
+    public function getAulas(){
+        $aulas = $this->database->getAulaByNome("");
+        $elements = '';
+        foreach ($aulas as $aula) {
+            $elements .= '<div>' . $aula["nome_aula"] . '</div>' .
+                '<div>' . $aula["descricao_aula"] . '</div>' .
+                '<div>' . $aula["date_aula"] . '</div>' .
+                '<div>' . $aula["hora_aula"] . '</div>' .
+                '<div>' . $aula["duracao"] . '</div>' .
+                '<div>' .
+                '<form method="POST" action="../processamentoInstrutor.php">' .
+                
+                '<input type="hidden" name="type" value="delete">' .
+                '<input type="submit" value="X">' .
+                '</form>' .
+                '</div>' .
+                '</div>';
+        }
+
+        return $elements;
+    }
+
+    public function getFilterAulas(string $nome){
+        $aulas = $this->database->getAulaByNome($nome);
+        $elements = '';
+        foreach ($aulas as $aula) {
+            $elements .= '<div>' . $aula["nome_aula"] . '</div>' .
+                '<div>' . $aula["descricao_aula"] . '</div>' .
+                '<div>' . $aula["data_aula"] . '</div>' .
+                '<div>' . $aula["hora_aula"] . '</div>' .
+                '<div>' . $aula["duracao"] . '</div>' .
+                '<div>' .
+                '<form method="POST" action="../processamentoInstrutor.php">' .
+                '<input type="hidden" name="type" value="delete">' .
+                '<input type="submit" value="X">' .
+                '</form>' .
+                '</div>' .
+                '</div>';
+        }
+
+        return $elements;
+    }
+
 
     public function editExercicio(int $id, string $descricao, int $repeticoes, int $series)
     {
