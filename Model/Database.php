@@ -41,12 +41,27 @@ class Database
         mysqli_query($connection, $query);
     }
 
+    public function getAlunoByID($id)
+    {
+        $connection = $this->connectDB();
+        $query = "SELECT * FROM aluno WHERE id = " . $id;
+        $result = mysqli_query($connection, $query);
+        return ($result);
+    }
+
+    public function updateAlunoById($alunos, $id)
+    {
+        $connection = $this->connectDB();
+        $query = "UPDATE aluno SET nome = '" . $alunos->getNome() . "', cpf = '" . $alunos->getCpf() . "', email = '" . $alunos->getEmail() . "', telefone = '" . $alunos->getTelefone() . "', endereco = '" . $alunos->getEndereco() . "', dataNascimento = '" . $alunos->getDataNascimento() . "' WHERE id = " . $id;
+        mysqli_query($connection, $query);
+    }
+
 
     public function inserirExercicio($exercicio)
     {
         $connection = $this->connectDB();
-        $query = "INSERT INTO exercicio (nome, descricao, repeticoes, series) VALUES ('" . $exercicio->getNome() . "', '" . $exercicio->getDescricao() . "', '" . 
-                  $exercicio->getRepeticoes() . "', '" . $exercicio->getSeries() . "')";
+        $query = "INSERT INTO exercicio (nome, descricao, repeticoes, series) VALUES ('" . $exercicio->getNome() . "', '" . $exercicio->getDescricao() . "', '" .
+            $exercicio->getRepeticoes() . "', '" . $exercicio->getSeries() . "')";
         mysqli_query($connection, $query);
     }
 

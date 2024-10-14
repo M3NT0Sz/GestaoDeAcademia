@@ -47,6 +47,10 @@ class Controller
                 '<input type="hidden" name="id" value="' . $aluno["id"] . '">' .
                 '<input type="hidden" name="type" value="delete">' .
                 '<input type="submit" value="X">' .
+                '<form method="POST" action="../processRecepcionista.php">' .
+                '<input type="hidden" name="id" value="' . $aluno["id"] . '">' .
+                '<input type="hidden" name="type" value="editar">' .
+                '<input type="submit" value="Editar">' .
                 '</form>' .
                 '</div>' .
                 '</div>';
@@ -55,7 +59,7 @@ class Controller
         return $elements;
     }
 
-    public function getFilteredAlunos(string $nome)
+    public function getFilteredAluno(string $nome)
     {
         $alunos = $this->database->getAlunoByNome($nome);
         $elements = '';
@@ -72,11 +76,40 @@ class Controller
                 '<input type="hidden" name="type" value="delete">' .
                 '<input type="submit" value="X">' .
                 '</form>' .
+                '<form method="POST" action="../processRecepcionista.php">' .
+                '<input type="hidden" name="id" value="' . $aluno["id"] . '">' .
+                '<input type="hidden" name="type" value="editar">' .
+                '<input type="submit" value="Editar">' .
+                '</form>' .
                 '</div>' .
                 '</div>';
         }
 
         return $elements;
+    }
+
+    public function editAlunoById($id)
+    {
+        $alunos = $this->database->getAlunoByID($id);
+        $elements = '';
+        foreach ($alunos as $aluno) {
+            $elements .= '<input type="hidden" name="id" value="' . $aluno["id"] . '">' .
+                '<input type="text" name="nome" value="' . $aluno["nome"] . '">' .
+                '<input type="text" name="cpf" value="' . $aluno["cpf"] . '">' .
+                '<input type="email" name="email" value="' . $aluno["email"] . '">' .
+                '<input type="text" name="telefone" value="' . $aluno["telefone"] . '">' .
+                '<input type="text" name="endereco" value="' . $aluno["endereco"] . '">' .
+                '<input type="date" name="dataNascimento" value="' . $aluno["dataNascimento"] . '">' .
+                '<input type="submit" value="Editar">';
+        }
+
+        return $elements;
+    }
+
+    public function updateAluno(int $id, string $nome, string $cpf, string $email, string $telefone, string $endereco, string $dataNascimento)
+    {
+        $alunos = new Aluno($nome, $cpf, $email, $telefone, $endereco, $dataNascimento);
+        $this->database->updateAlunoById($alunos, $id);
     }
 
     public function deleteAluno(int $id)
@@ -107,7 +140,7 @@ class Controller
         return $elements;
     }
 
-   
+
 
     public function getFilteredExercicios(string $name)
     {
@@ -131,7 +164,8 @@ class Controller
         return $elements;
     }
 
-    public function getAulas(){
+    public function getAulas()
+    {
         $aulas = $this->database->getAulaByNome("");
         $elements = '';
         foreach ($aulas as $aula) {
@@ -142,7 +176,7 @@ class Controller
                 '<div>' . $aula["duracao"] . '</div>' .
                 '<div>' .
                 '<form method="POST" action="../processamentoInstrutor.php">' .
-                
+
                 '<input type="hidden" name="type" value="delete">' .
                 '<input type="submit" value="X">' .
                 '</form>' .
@@ -153,7 +187,8 @@ class Controller
         return $elements;
     }
 
-    public function getFilterAulas(string $nome){
+    public function getFilterAulas(string $nome)
+    {
         $aulas = $this->database->getAulaByNome($nome);
         $elements = '';
         foreach ($aulas as $aula) {
