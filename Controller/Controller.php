@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__ . '/../model/Database.php');
 require_once(__DIR__ . '/../model/Aluno.php');
+require_once(__DIR__ . '/../model/Exercicio.php');
 
 class Controller
 {
@@ -15,6 +16,12 @@ class Controller
     {
         $alunos = new Aluno($nome, $cpf, $email, $telefone, $endereco, $dataNascimento);
         $this->database->inserirAluno($alunos);
+    }
+
+    public function cadastrarExercicio($nome, $descricao, $repeticoes, $series)
+    {
+        $exercicio = new Exercicio($nome, $descricao, $repeticoes, $series);
+        $this->database->inserirExercicio($exercicio);
     }
 
     public function getAlunos()
@@ -69,5 +76,61 @@ class Controller
     public function deleteAluno(int $id)
     {
         $this->database->deleteAlunoById($id);
+    }
+
+
+    public function getExercicios()
+    {
+        $exercicios = $this->database->getExercicioByNome("");
+        $elements = '';
+        foreach ($exercicios as $exercicio) {
+            $elements .= '<div>' . $exercicio["nome"] . '</div>' .
+                '<div>' . $exercicio["descricao"] . '</div>' .
+                '<div>' . $exercicio["repeticoes"] . '</div>' .
+                '<div>' . $exercicio["series"] . '</div>' .
+                '<div>' .
+                '<form method="POST" action="../processExercicio.php">' .
+                '<input type="hidden" name="id" value="' . $exercicio["id"] . '">' .
+                '<input type="hidden" name="type" value="delete">' .
+                '<input type="submit" value="X">' .
+                '</form>' .
+                '</div>' .
+                '</div>';
+        }
+
+        return $elements;
+    }
+
+    public function getFilteredExercicios(string $name)
+    {
+        $exercicios = $this->database->getExercicioByNome($name);
+        $elements = '';
+        foreach ($exercicios as $exercicio) {
+            $elements .= '<div>' . $exercicio["nome"] . '</div>' .
+                '<div>' . $exercicio["descricao"] . '</div>' .
+                '<div>' . $exercicio["repeticoes"] . '</div>' .
+                '<div>' . $exercicio["series"] . '</div>' .
+                '<div>' .
+                '<form method="POST" action="../processExercicio.php">' .
+                '<input type="hidden" name="id" value="' . $exercicio["id"] . '">' .
+                '<input type="hidden" name="type" value="delete">' .
+                '<input type="submit" value="X">' .
+                '</form>' .
+                '</div>' .
+                '</div>';
+        }
+
+        return $elements;
+    }
+
+    public function editExercicio(int $id, string $descricao, int $repeticoes, int $series)
+    {
+        $Product = new Product($name, $descricao, $repeticoes, $series);
+        $this->database->updateExercicioById($exercicio, $id);
+    }
+
+    public function deleteExercicio(int $id)
+    {
+        $this->database->deleteExercicioById($id);
     }
 }

@@ -40,4 +40,35 @@ class Database
         $query = "DELETE FROM aluno WHERE id = " . $id;
         mysqli_query($connection, $query);
     }
+
+
+    public function inserirExercicio($exercicio)
+    {
+        $connection = $this->connectDB();
+        $query = "INSERT INTO exercicio (nome, descricao, repeticoes, series) VALUES ('" . $exercicio->getNome() . "', '" . $exercicio->getDescricao() . "', '" . 
+                  $exercicio->getRepeticoes() . "', '" . $exercicio->getSeries() . "')";
+        mysqli_query($connection, $query);
+    }
+
+    public function getExercicioByNome($nome)
+    {
+        $connection = $this->connectDB();
+        $query = "SELECT * FROM exercicio WHERE nome LIKE '%" . $nome . "%'";
+        $result = mysqli_query($connection, $query);
+        return ($result);
+    }
+
+    public function updateExercicioById($exercicio, $id)
+    {
+        $connection = $this->connectDB();
+        $query = "UPDATE exercicio SET name = '" . $exercicio->getName() . "', descricao = '" . $exercicio->getDescricao() . "', repeticoes = '" . $exercicio->getRepeticoes() . $exercicio->getSeries() . "' WHERE id = " . $id;
+        mysqli_query($connection, $query);
+    }
+
+    public function deleteExercicioById($id)
+    {
+        $connection = $this->connectDB();
+        $query = "DELETE FROM exercicio WHERE id = " . $id;
+        mysqli_query($connection, $query);
+    }
 }

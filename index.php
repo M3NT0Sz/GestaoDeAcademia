@@ -8,5 +8,6 @@
 <body>
     <a href="./View/Pages/Aluno.php">Aluno</a>
     <a href="./View/Pages/Recepcionista.php">Recepcionista</a>
+    <a href="./View/Pages/Exercicio.php">Exercícios</a>
 </body>
 </html>
