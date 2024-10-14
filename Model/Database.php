@@ -56,6 +56,20 @@ class Database
         mysqli_query($connection, $query);
     }
 
+    public function getExercicioByID($id)
+    {
+        $connection = $this->connectDB();
+        $query = "SELECT * FROM exercicio WHERE id = " . $id;
+        $result = mysqli_query($connection, $query);
+        return ($result);
+    }
+
+    public function updateExercicioById($exercicio, $id)
+    {
+        $connection = $this->connectDB();
+        $query = "UPDATE exercicio SET nome = '" . $exercicio->getNome() . "', descricao = '" . $exercicio->getDescricao() . "', repeticoes = '" . $exercicio->getRepeticoes() . "', series = '" . $exercicio->getSeries() . "' WHERE id = " . $id;
+        mysqli_query($connection, $query);
+    }
 
     public function inserirExercicio($exercicio)
     {
@@ -86,12 +100,6 @@ class Database
         $query = "SELECT * FROM aula WHERE nome_aula LIKE '%" . $nome . "%'";
         $result = mysqli_query($connection, $query);
         return ($result);
-    }
-    public function updateExercicioById($exercicio, $id)
-    {
-        $connection = $this->connectDB();
-        $query = "UPDATE exercicio SET name = '" . $exercicio->getName() . "', descricao = '" . $exercicio->getDescricao() . "', repeticoes = '" . $exercicio->getRepeticoes() . $exercicio->getSeries() . "' WHERE id = " . $id;
-        mysqli_query($connection, $query);
     }
 
     public function deleteExercicioById($id)

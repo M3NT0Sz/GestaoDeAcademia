@@ -3,27 +3,39 @@ session_start();
 require_once '../controller/Controller.php';
 $controller = new Controller();
 
-if($_POST['type'] == "insert"){
-    if (!empty($_POST['nome']) && !empty($_POST['descricao']) && !empty($_POST['repeticoes']) && !empty($_POST['series'])){
+if (!empty($_POST['id']) && !empty($_POST['nome']) && !empty($_POST['descricao']) && !empty($_POST['repeticoes']) && !empty($_POST['series'])) {
+    $id = $_POST['id'];
+    $nome = $_POST['nome'];
+    $descricao = $_POST['descricao'];
+    $repeticoes = $_POST['repeticoes'];
+    $series = $_POST['series'];
+
+    $controller->updateExercicio($id, $nome, $descricao, $repeticoes, $series);
+    header("location: ./Pages/Exercicio.php");
+    die();
+}
+
+if ($_POST['type'] == "insert") {
+    if (!empty($_POST['nome']) && !empty($_POST['descricao']) && !empty($_POST['repeticoes']) && !empty($_POST['series'])) {
         $nome = $_POST['nome'];
         $descricao = $_POST['descricao'];
         $repeticoes = $_POST['repeticoes'];
         $series = $_POST['series'];
-    
-        if(!empty($_POST['id'])){
+
+        if (!empty($_POST['id'])) {
             $id = $_POST['id'];
-    
+
             $controller->editExercicio($id, $nome, $descricao, $repeticoes, $series);
         } else {
             $controller->cadastrarExercicio($nome, $descricao, $repeticoes, $series);
         }
-        
-            header('Location: ./Pages/Exercicio.php');
-            die();
-        }
+
+        header('Location: ./Pages/Exercicio.php');
+        die();
+    }
 }
-    
-if($_POST['type'] == "search"){
+
+if ($_POST['type'] == "search") {
     if (!empty($_POST['search']) && $_POST['type'] == "search") {
         $search = $_POST['search'];
         $elements = $controller->getFilteredExercicios($search);
@@ -35,14 +47,20 @@ if($_POST['type'] == "search"){
         header("Location: ./Pages/Exercicio.php");
         die();
     }
-
 }
-    
-if($_POST['type'] == "delete"){
+
+if ($_POST['type'] == "delete") {
     if (!empty($_POST['id']) && $_POST['type'] == "delete") {
         $id = $_POST['id'];
         $controller->deleteExercicio($id);
         header("location: ./pages/Exercicio.php");
         die();
     }
+}
+
+if (!empty($_POST['id']) && $_POST['type'] == "editar") {
+    $id = $_POST['id'];
+    $_SESSION['id'] = $id;
+    header("location: ./pages/EditExercicio.php");
+    die();
 }

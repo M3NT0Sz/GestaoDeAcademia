@@ -133,6 +133,11 @@ class Controller
                 '<input type="hidden" name="type" value="delete">' .
                 '<input type="submit" value="X">' .
                 '</form>' .
+                '<form method="POST" action="../processExercicio.php">' .
+                '<input type="hidden" name="id" value="' . $exercicio["id"] . '">' .
+                '<input type="hidden" name="type" value="editar">' .
+                '<input type="submit" value="Editar">' .
+                '</form>' .
                 '</div>' .
                 '</div>';
         }
@@ -140,7 +145,27 @@ class Controller
         return $elements;
     }
 
+    public function editExercicioById($id)
+    {
+        $exercicios = $this->database->getExercicioByID($id);
+        $elements = '';
+        foreach ($exercicios as $exercicio) {
+            $elements .= '<input type="hidden" name="id" value="' . $exercicio["id"] . '">' .
+                '<input type="text" name="nome" value="' . $exercicio["nome"] . '">' .
+                '<input type="text" name="descricao" value="' . $exercicio["descricao"] . '">' .
+                '<input type="number" name="repeticoes" value="' . $exercicio["repeticoes"] . '">' .
+                '<input type="number" name="series" value="' . $exercicio["series"] . '">' .
+                '<input type="submit" value="Editar">';
+        }
 
+        return $elements;
+    }
+
+    public function updateExercicio(int $id, string $nome, string $descricao, int $repeticoes, int $series)
+    {
+        $exercicio = new Exercicio($nome, $descricao, $repeticoes, $series);
+        $this->database->updateExercicioById($exercicio, $id);
+    }
 
     public function getFilteredExercicios(string $name)
     {
@@ -156,6 +181,11 @@ class Controller
                 '<input type="hidden" name="id" value="' . $exercicio["id"] . '">' .
                 '<input type="hidden" name="type" value="delete">' .
                 '<input type="submit" value="X">' .
+                '</form>' .
+                '<form method="POST" action="../processExercicio.php">' .
+                '<input type="hidden" name="id" value="' . $exercicio["id"] . '">' .
+                '<input type="hidden" name="type" value="editar">' .
+                '<input type="submit" value="Editar">' .
                 '</form>' .
                 '</div>' .
                 '</div>';
