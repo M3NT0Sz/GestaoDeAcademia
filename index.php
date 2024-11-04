@@ -6,7 +6,6 @@
     <title>Gestão de Academia</title>
 </head>
 <body>
-    <a href="./View/Pages/Aluno.php">Aluno</a>
     <a href="./View/Pages/Recepcionista.php">Recepcionista</a>
     <a href="./View/Pages/Exercicio.php">Exercícios</a>
     <a href="./View/Pages/Instrutor.php">Instrutor</a>

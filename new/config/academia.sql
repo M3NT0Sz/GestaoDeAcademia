@@ -37,7 +37,7 @@ CREATE TABLE `aulas` (
   `nome` varchar(150) NOT NULL,
   `instrutor_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`instrutor_id`) REFERENCES `instrutores`(`id`),
+  FOREIGN KEY (`instrutor_id`) REFERENCES `instrutores`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `aulas_exercicios` (
